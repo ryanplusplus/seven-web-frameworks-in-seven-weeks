@@ -37,4 +37,17 @@ describe "Bookmarking App" do
     retrieved_bookmark = JSON.parse(last_response.body)
     expect(retrieved_bookmark["title"]).to eq("Success")
   end
+
+  it "deletes a bookmark" do
+    post "/bookmarks",
+      {:url => "http://www.test.com", :title => "Test"}
+    bookmark_uri = last_response.body
+    id = bookmark_uri.split("/").last
+
+    delete "/bookmarks/#{id}"
+    expect(last_response.status).to be == 200
+
+    get "/bookmarks/#{id}"
+    expect(last_response.status).to be == 404
+  end
 end

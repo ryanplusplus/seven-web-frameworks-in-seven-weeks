@@ -40,6 +40,17 @@ end
 get "/bookmarks/:id" do
   id = params[:id]
   bookmark = Bookmark.get(id)
-  content_type :json
-  bookmark.to_json
+  if bookmark then
+    content_type :json
+    bookmark.to_json
+  else
+    404
+  end
+end
+
+delete "/bookmarks/:id" do
+  id = params[:id]
+  bookmark = Bookmark.get(id)
+  bookmark.destroy
+  200
 end
