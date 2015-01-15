@@ -29,6 +29,14 @@ post "/bookmarks" do
   [201, "/bookmarks/#{bookmark['id']}"]
 end
 
+put "/bookmarks/:id" do
+  id = params[:id]
+  bookmark = Bookmark.get(id)
+  input = params.slice "url", "title"
+  bookmark.update input
+  204
+end
+
 get "/bookmarks/:id" do
   id = params[:id]
   bookmark = Bookmark.get(id)
